@@ -4,7 +4,8 @@ import {
   Column,
   ManyToOne,
   OneToMany,
-  BaseEntity
+  BaseEntity,
+  JoinColumn
 } from 'typeorm';
 import { Car } from './Car';
 import { State } from './State';
@@ -26,7 +27,7 @@ export class Visit extends BaseEntity {
   @ManyToOne(() => State, (state) => state.id_sem)
   state: State;
 
-  @ManyToOne(() => Car, (car) => car.visits, { cascade: true })
+  @ManyToOne(() => Car, (car) => car.visits)
   car: Car;
 
   @Column({ nullable: true })
@@ -38,6 +39,7 @@ export class Visit extends BaseEntity {
   @OneToMany(() => Document, (document) => document.visit)
   documents: Document[];
 
-  @OneToMany(() => Token, (token) => token.visit)
+  @ManyToOne(() => Token, (token) => token.visit)
+  @JoinColumn([{ name: 'id_token', referencedColumnName: 'id_token' }])
   token: Token;
 }

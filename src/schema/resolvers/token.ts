@@ -3,7 +3,7 @@ import { Token } from '../entities/Token';
 
 export const tokens = async () => {
   try {
-    const tokens = await Token.find();
+    const tokens = await Token.find({ relations: ['visit'] });
     return tokens;
   } catch (err: any) {
     throw new ApolloError('Error getting tokens', '500', err);
@@ -12,7 +12,10 @@ export const tokens = async () => {
 
 export const token = async (_: any, { id }: { id: number }) => {
   try {
-    const token = await Token.findOne({ where: { id_token: id } });
+    const token = await Token.findOne({
+      where: { id_token: id },
+      relations: ['visit']
+    });
     if (!token) {
       throw new ApolloError(`Token with id ${id} not found.`, '404');
     }

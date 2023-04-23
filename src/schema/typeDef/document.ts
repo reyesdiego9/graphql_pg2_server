@@ -1,5 +1,5 @@
 import { gql } from 'apollo-server-express';
-import { documents, document } from '../resolvers/document';
+import { documents, document, documentsByVisitId } from '../resolvers/document';
 
 export const typeDefs = gql`
   type Document {
@@ -12,6 +12,7 @@ export const typeDefs = gql`
   type Query {
     documents: [Document!]!
     document(id: ID!): Document
+    documentsByVisitId(visit_id: Int!): Document
   }
 
   type Mutation {
@@ -30,6 +31,7 @@ export const typeDefs = gql`
 export const resolvers = {
   Query: {
     documents,
-    document
+    document,
+    documentsByVisitId
   }
 };

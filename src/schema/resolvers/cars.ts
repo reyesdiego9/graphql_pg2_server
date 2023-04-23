@@ -3,9 +3,9 @@ import { Car } from '../entities/Car';
 
 export const cars = async () => {
   try {
-    const cars = await Car.find({
-      relations: ['client', 'visits']
-    });
+    const cars = await Car.createQueryBuilder('car')
+      .leftJoinAndSelect('car.client', 'client') // Agrega el left join con Client
+      .getMany();
     return cars;
   } catch (err: any) {
     throw new ApolloError('Error getting cars', '500', err);
@@ -14,16 +14,13 @@ export const cars = async () => {
 
 export const car = async (_: any, { id }: { id: number }) => {
   try {
-    const car = await Car.findOne({
-      where: { id_car: id },
-      relations: ['client', 'visits']
-    });
+    const car = await Car.createQueryBuilder('car')
+      .leftJoinAndSelect('car.client', 'client') // Agrega el left join con Client
+      .where('car.id_car = :id', { id })
+      .getOne();
+
     if (!car) {
       throw new ApolloError(`Car with id ${id} not found.`, '404');
-    }
-
-    if (!car.client) {
-      throw new ApolloError(`Client not found for car with id ${id}.`, '500');
     }
     return car;
   } catch (err: any) {

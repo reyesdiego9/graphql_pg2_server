@@ -1,5 +1,5 @@
 import { gql } from 'apollo-server-express';
-import { visits, visit } from '../resolvers/visit';
+import { visits, visit, visitsByClientId } from '../resolvers/visit';
 
 export const typeDefs = gql`
   type Visit {
@@ -17,6 +17,7 @@ export const typeDefs = gql`
   type Query {
     visits: [Visit!]!
     visit(id: ID!): Visit
+    visitsByClientId(id_client: Int!): [Visit!]!
   }
 
   type Mutation {
@@ -37,6 +38,7 @@ export const typeDefs = gql`
 export const resolvers = {
   Query: {
     visits,
-    visit
+    visit,
+    visitsByClientId
   }
 };

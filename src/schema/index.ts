@@ -32,10 +32,10 @@ export const resolvers = [
   catalogServiceResolver,
   clientResolver,
   visitResolver,
+  tokenResolver,
   serviceResolver,
   photoResolver,
   stateResolver,
-  tokenResolver,
   documentResolver
 ];
 export const typeDefs = [

@@ -31,7 +31,6 @@ export class Car extends BaseEntity {
   brand: string;
 
   @ManyToOne(() => Client, (client) => client.cars)
-  @JoinColumn({ name: 'id_client' })
   client: Client;
 
   @OneToMany(() => Visit, (visit) => visit.car)
